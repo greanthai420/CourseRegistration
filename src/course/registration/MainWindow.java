@@ -1,9 +1,9 @@
 /*
  * AUTHOR
  * SUTHIPONG THONGJAROEN 212210025
+ * Tanakrit Pilaphaeng 212310097
  * 
- * Program to help students manage their course registration 
- * Class to create main window GUI
+ * Class to create main window GUI and a bunch of things.
  */
 package course.registration;
 
@@ -16,10 +16,6 @@ import java.util.Scanner;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.BorderFactory.*;
 
-/**
- *
- * @author becky_000
- */
 public class MainWindow extends JFrame {
 
     private final int WINDOW_WIDTH = 800;
@@ -36,6 +32,8 @@ public class MainWindow extends JFrame {
     private JMenuItem aboutItem;
     //panels
     private JPanel selectedListPane;
+    //Study table panel
+    private StudyTablePanel studytableclass;
     //private JPanel studyTablePane;
     private JPanel headerLogoPane;
     private JPanel mainPane;
@@ -50,7 +48,7 @@ public class MainWindow extends JFrame {
     private String insMajor;
     //File reader
     private FileReader filereader;
-
+   
     //Constructor without fixed read from file
     public MainWindow() {
         //Setting up
@@ -322,7 +320,7 @@ public class MainWindow extends JFrame {
                 contentpane.remove(headerLogoPane);
                 //Call studytablepane and selectecpane
                 //studytablepanel();
-                StudyTablePanel studytableclass = new StudyTablePanel(filereader);
+                studytableclass = new StudyTablePanel(filereader);
                 contentpane.add(studytableclass.getpanel(), studytableclass.returnc());
                 selectedpanel();
             } else {

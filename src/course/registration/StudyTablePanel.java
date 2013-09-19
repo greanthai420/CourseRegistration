@@ -1,6 +1,10 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * AUTHOR
+ * SUTHIPONG THONGJAROEN 212210025
+ * Tanakrit Pilaphaeng 212310097
+ * 
+ * Study table panel in main window.
+ * Migrated to a new class/file because of long code.
  */
 package course.registration;
 
@@ -13,10 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/**
- *
- * @author becky_000
- */
 public class StudyTablePanel {
 
     private JPanel studyTablePane;
@@ -32,12 +32,10 @@ public class StudyTablePanel {
 
     public StudyTablePanel(FileReader file) {
         fr = file;
-
         studyTablePane = new JPanel();
         studyTablePane.setBorder(BorderFactory.createLineBorder(Color.black));
         studyTablePane.setBackground(Color.white);
         studyTablePane.setLayout(new GridBagLayout());
-
         GridBagConstraints sc = new GridBagConstraints();
 
         /* USE EXAMPLE
@@ -128,7 +126,7 @@ public class StudyTablePanel {
         addCells();
     }
 
-    //Checks for overlap and counts them adding to td array
+    //Checks for overlap and counts them adding to td[][]
     private void checkOverlap() {
         /*
          * To use with creation of arrays with proper size
@@ -266,6 +264,7 @@ public class StudyTablePanel {
 //        }
     }
 
+    //Loop add data from filereader class into timeday arraylist
     private void insDataArray() {
         for (int i = 0, a = 0, b = 0, c = 0; i < fr.getLineNum(); i++) {
             if (fr.getCourseTime(i).equals("8:30")) {
@@ -477,6 +476,7 @@ public class StudyTablePanel {
         return studyTablePane;
     }
 
+    //Return GridBagConstraints to use when adding this class's panel into MainWindow
     public GridBagConstraints returnc() {
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;

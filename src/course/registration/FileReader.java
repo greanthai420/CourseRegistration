@@ -1,8 +1,9 @@
 /*
  * AUTHOR
  * SUTHIPONG THONGJAROEN 212210025
+ * Tanakrit Pilaphaeng 212310097
  * 
- * Class to read from file
+ * Function to read from file and store data for further use.
  */
 package course.registration;
 
@@ -11,10 +12,6 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-/**
- *
- * @author becky_000
- */
 public class FileReader {
 
     private String[] courseID;
@@ -22,23 +19,23 @@ public class FileReader {
     private String[] courseDays;
     private String[] courseTime;
     private int linenum = 0;
-    public int test = 0;
 
     public FileReader(File x) throws IOException {
         String tmpstr;
-        int i = 0;
+        
         File file = new File(x.getName());
-
         //Detects the total number of lines to create array based on that number
         try (Scanner filereader = new Scanner(file)) {
             while (filereader.hasNext()) {
                 filereader.nextLine();
                 linenum++;
             }
+            //Close the file before going through the file again
             filereader.close();
         }
 
         //Create arrays with proper size from total line number
+        int i = 0;
         try (Scanner filereader = new Scanner(file)) {
             if (linenum > 0) {
                 courseID = new String[linenum];
@@ -69,7 +66,6 @@ public class FileReader {
 
     public String getCourseName(int coursename) {
         return courseName[coursename];
-        //System.out.println(courseName[coursename]);
     }
 
     public String getCourseDays(int coursedays) {
