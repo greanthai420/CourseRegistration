@@ -365,13 +365,7 @@ public class MainWindow extends JFrame {
          */
         for (int x = 1; x < 6; x++) {
             for (int y = 1; y < 7; y++) {
-                studytableclass.getxy(x, y).addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        //System.out.println("You pressed a button");
-                        xyclicked(evt);
-                    }
-                });
+                studytableclass.getxy(x, y).addActionListener(new xyButtonListener(x, y));
             }
         }
 
@@ -397,19 +391,38 @@ public class MainWindow extends JFrame {
         //Send email button
         JButton sendemail = new JButton("Send e-mail");
         selectedListPane.add(sendemail);
-
-        //end method
     }
 
-    private void xyclicked(ActionEvent evt) {
-        System.out.println("You pressed a button");
-        //Adds all items to clickedlistModel only if it is empty and there are overlaps
-        if (studytableclass.getTimedaysize(0) != 1 && clickedlistModel.isEmpty()) {
-            for (int i = 0; i < studytableclass.getTimedaysize(0); i++) {
-                clickedlistModel.addElement(studytableclass.getTimedaystr(0, i));
-            }
+    /*
+     * For use with selectedListPane
+     * Perform operations based on which cells (xy buttons) are pressed
+     */
+    private class xyButtonListener implements ActionListener {
+
+        private int xa, ya;
+
+        public xyButtonListener(int x, int y) {
+            xa = x;
+            ya = y;
         }
 
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            //Determines which button is pressed
+            if (evt.getSource() == studytableclass.getxy(xa, ya)) {
+                System.out.println("It's x" + xa + " y" + ya);                
+            }
+        }
     }
+
+//    private void xyclicked(ActionEvent evt) {
+//        System.out.println("You pressed a button");
+//        //Adds all items to clickedlistModel only if it is empty and there are overlaps
+//        if (studytableclass.getTimedaysize(0) != 1 && clickedlistModel.isEmpty()) {
+//            for (int i = 0; i < studytableclass.getTimedaysize(0); i++) {
+//                clickedlistModel.addElement(studytableclass.getTimedaystr(0, i));
+//            }
+//        }
+//    }
     //EOF
 }
