@@ -209,7 +209,7 @@ public class StudyTablePanel {
         /*
          * Initialize arraylist of courseID and coursename arrays
          * timeday(0) = array of ID ,1 = array of name, 2 = array of next id...
-         * timeday(0) = mw830id, 1 = mw830name, 2 = fs830id, 3 = fs830name
+         * timeday(0) = mw830id, 1 = mw830name, 2 = fs830id, 3 = fs830name...
          * ID and name are initialized with same size
          */
         timeday = new ArrayList<>();
@@ -467,6 +467,20 @@ public class StudyTablePanel {
 
     public ArrayList getTimeday() {
         return timeday;
+    }
+    
+    /*
+     * Get timeday as string
+     * timeday.get(td)[course]
+     * td 0 = mw830id, 1 = mw830name, 2 = tr830id, 3 = tr830name...
+     * course = course that belongs to that timeday combo
+     */
+    public String getTimedaystr(int td, int course){
+        return timeday.get(td)[course];
+    }
+    
+    public int getTimedaysize(int td){
+        return timeday.get(td).length;
     }
 
     public JButton getxy(int x, int y) {

@@ -48,6 +48,7 @@ public class MainWindow extends JFrame {
     private String insMajor;
     //File reader
     private FileReader filereader;
+    private DefaultListModel clickedlistModel;
 
     //Constructor without fixed read from file
     public MainWindow() {
@@ -337,6 +338,8 @@ public class MainWindow extends JFrame {
         selectedListPane = new JPanel();
         selectedListPane.setBorder(BorderFactory.createLineBorder(Color.black));
         selectedListPane.setBackground(Color.white);
+        //selectedListPane.setLayout(new BoxLayout(selectedListPane, BoxLayout.PAGE_AXIS));
+        selectedListPane.setLayout(new GridLayout(0, 1));
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 1;
@@ -348,7 +351,10 @@ public class MainWindow extends JFrame {
         c.weighty = 1.00;
         contentpane.add(selectedListPane, c);
 
+        //Greeting message with first name
         JLabel greetmsg = new JLabel("Welcome! " + insname_f);
+        //greetmsg.setHorizontalAlignment(SwingConstants.CENTER);
+        //greetmsg.setBorder(BorderFactory.createLineBorder(Color.black));
         selectedListPane.add(greetmsg);
 
         /*
@@ -361,14 +367,49 @@ public class MainWindow extends JFrame {
             for (int y = 1; y < 7; y++) {
                 studytableclass.getxy(x, y).addActionListener(new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
+                    public void actionPerformed(ActionEvent evt) {
                         //System.out.println("You pressed a button");
+                        xyclicked(evt);
                     }
                 });
             }
         }
+
+        //List for clicked button
+        //Items to add into list
+        clickedlistModel = new DefaultListModel();
+        //The list
+        JList clickedlist = new JList(clickedlistModel);
+        //Make it scrollable
+        JScrollPane clickedlistScroller = new JScrollPane(clickedlist);
+        clickedlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        selectedListPane.add(clickedlistScroller);
+
+        //Label
+        JLabel info = new JLabel("Current selected course");
+        selectedListPane.add(info);
+        //List for selected course
+        JList selectedlist = new JList();
+        JScrollPane selectedlistScroller = new JScrollPane(selectedlist);
+        selectedlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        selectedListPane.add(selectedlistScroller);
+
+        //Send email button
+        JButton sendemail = new JButton("Send e-mail");
+        selectedListPane.add(sendemail);
+
         //end method
     }
-    
+
+    private void xyclicked(ActionEvent evt) {
+        System.out.println("You pressed a button");
+        //Adds all items to clickedlistModel only if it is empty and there are overlaps
+        if (studytableclass.getTimedaysize(0) != 1 && clickedlistModel.isEmpty()) {
+            for (int i = 0; i < studytableclass.getTimedaysize(0); i++) {
+                clickedlistModel.addElement(studytableclass.getTimedaystr(0, i));
+            }
+        }
+
+    }
     //EOF
 }
