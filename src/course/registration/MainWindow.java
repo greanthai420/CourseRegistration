@@ -48,7 +48,7 @@ public class MainWindow extends JFrame {
     private String insMajor;
     //File reader
     private FileReader filereader;
-   
+
     //Constructor without fixed read from file
     public MainWindow() {
         //Setting up
@@ -84,8 +84,8 @@ public class MainWindow extends JFrame {
         //Read from file
         File filechosen = new File(file);
         filereader = new FileReader(filechosen);
-    }    
-    
+    }
+
     private void menubar() {
         //Create the menu bar and assign to window
         menuBar = new JMenuBar();
@@ -118,18 +118,19 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-        exitItem.addActionListener(new java.awt.event.ActionListener() {
+        exitItem.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 exitItemPerformed(evt);
             }
         });
     }
 
-    /** UNFINISHED
-    * Open a file chooser and call return chosen file to FileReader class    * 
-    */
-    private void openItemPerformed(java.awt.event.ActionEvent evt) throws IOException {
+    /**
+     * UNFINISHED Open a file chooser and call return chosen file to FileReader
+     * class *
+     */
+    private void openItemPerformed(ActionEvent evt) throws IOException {
         JFileChooser fileChooser = new JFileChooser();
         //Set filter (TXT and CSV files only)
         FileNameExtensionFilter filter = new FileNameExtensionFilter("TXT and CSV files", "csv", "txt");
@@ -144,7 +145,7 @@ public class MainWindow extends JFrame {
     }
 
     //Exit the program
-    private void exitItemPerformed(java.awt.event.ActionEvent evt) {
+    private void exitItemPerformed(ActionEvent evt) {
         System.exit(0);
     }
 
@@ -292,16 +293,16 @@ public class MainWindow extends JFrame {
         c.weighty = 1.00;
         mainPane.add(okButton, c);
         //Add event listener
-        okButton.addActionListener(new java.awt.event.ActionListener() {
+        okButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 OkButtonPerformed(evt);
             }
         });
     }
 
     //OK button on mainPane
-    private void OkButtonPerformed(java.awt.event.ActionEvent evt) {
+    private void OkButtonPerformed(ActionEvent evt) {
         //Show error popup if a text field is empty
         //if not empty
         if (!(insname_f_first.getText().isEmpty() || insname_f_last.getText().isEmpty() || insID_f.getText().isEmpty())) {
@@ -330,7 +331,7 @@ public class MainWindow extends JFrame {
             // if empty
             JOptionPane.showMessageDialog(null, "Please complete all information!", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-    }    
+    }
 
     private void selectedpanel() {
         selectedListPane = new JPanel();
@@ -349,8 +350,25 @@ public class MainWindow extends JFrame {
 
         JLabel greetmsg = new JLabel("Welcome! " + insname_f);
         selectedListPane.add(greetmsg);
+
+        /*
+         * Adds actionlistener to all studytablepane cells
+         * Do things when cells (xy buttons) in studytablepane are clicked
+         * 
+         * Starts from x1y1 not x0y0 becausex x0y0 are null to x5y6
+         */
+        for (int x = 1; x < 6; x++) {
+            for (int y = 1; y < 7; y++) {
+                studytableclass.getxy(x, y).addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        //System.out.println("You pressed a button");
+                    }
+                });
+            }
+        }
+        //end method
     }
     
-    
-
+    //EOF
 }

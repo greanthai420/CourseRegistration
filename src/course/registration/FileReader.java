@@ -75,4 +75,6 @@ public class FileReader {
     public String getCourseTime(int coursetime) {
         return courseTime[coursetime];
     }
+    
+    //EOF
 }

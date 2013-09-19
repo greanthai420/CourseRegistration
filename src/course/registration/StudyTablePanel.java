@@ -488,4 +488,6 @@ public class StudyTablePanel {
         c.weighty = 1.00;
         return c;
     }
+    
+    //EOF
 }
