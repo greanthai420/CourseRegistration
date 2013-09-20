@@ -6,7 +6,6 @@
  * Selected listpanel in main window.
  * Migrated to a new class/file because of long code.
  */
-
 package course.registration;
 
 import java.awt.Color;
@@ -25,11 +24,15 @@ import javax.swing.ListSelectionModel;
 
 public class SelectedListPanel {
 
+    //Import things from other class without duplicating windows
+    private final CourseRegistration cr = new CourseRegistration();
+    private final MainWindow mainwin = cr.getMainWindow();
+    private final StudyTablePanel studytableclass = mainwin.getstudytableclass();
+    //fields to use
     private JPanel selectedListPane;
-    private CourseRegistration cr = new CourseRegistration();
-    private MainWindow mainwin = cr.getMainWindow();
-    private StudyTablePanel studytableclass = mainwin.getstudytableclass();
+    private JList clickedlist;
     private DefaultListModel clickedlistModel;
+    private JList selectedlist;
     private DefaultListModel selectedlistModel;
 
     public SelectedListPanel() {
@@ -42,7 +45,7 @@ public class SelectedListPanel {
         //Items to add into list
         clickedlistModel = new DefaultListModel();
         //The list
-        JList clickedlist = new JList(clickedlistModel);
+        clickedlist = new JList(clickedlistModel);
         //Make it scrollable
         JScrollPane clickedlistScroller = new JScrollPane(clickedlist);
         clickedlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -54,7 +57,7 @@ public class SelectedListPanel {
 
         //List for selected course
         selectedlistModel = new DefaultListModel();
-        JList selectedlist = new JList(selectedlistModel);
+        selectedlist = new JList(selectedlistModel);
         JScrollPane selectedlistScroller = new JScrollPane(selectedlist);
         selectedlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         selectedListPane.add(selectedlistScroller);
@@ -62,13 +65,14 @@ public class SelectedListPanel {
         //Send email button
         JButton sendemail = new JButton("Send e-mail");
         selectedListPane.add(sendemail);
+
+        //Add actions for xy buttons from studytablepanel
         addaction();
     }
 
     private void addaction() {
         for (int x = 1; x < 6; x++) {
             for (int y = 1; y < 7; y++) {
-                //studytableclass.getxybutton(x, y).addActionListener(new xyButtonListener(x, y));
                 studytableclass.getxybutton(x, y).addActionListener(new xyButtonListener(x, y));
             }
         }
@@ -87,8 +91,16 @@ public class SelectedListPanel {
         public void actionPerformed(ActionEvent evt) {
             //Remove precious JList clickedlist records
             clickedlistModel.removeAllElements();
-            //Make the clicked button yellow
-            //studytableclass.getxybutton(xa, ya).setBackground(Color.yellow);
+
+            //Remove other button's background color if they are yellow
+            for (int xi = 1; xi <= 5; xi++) {
+                for (int yi = 1; yi <= 6; yi++) {
+                    if (studytableclass.getxybutton(xi, yi).getBackground().equals(Color.yellow)) {
+                        studytableclass.getxybutton(xi, yi).setBackground(Color.white);
+                    }
+                }
+            }
+
             //Determines which button is pressed
             int tmpint = 0;
             if (evt.getSource() == studytableclass.getxybutton(xa, ya)) {
@@ -171,24 +183,24 @@ public class SelectedListPanel {
                     switch (ya) {
                         case 1:
                         case 3:
-//                            studytableclass.getxybutton(xa, 1).setBackground(Color.gray);
-//                            studytableclass.getxybutton(xa, 3).setBackground(Color.gray);
-                            studytableclass.getxybutton(xa, 1).setEnabled(false);
-                            studytableclass.getxybutton(xa, 3).setEnabled(false);
+                            studytableclass.getxybutton(xa, 1).setBackground(Color.gray);
+                            studytableclass.getxybutton(xa, 3).setBackground(Color.gray);
+//                            studytableclass.getxybutton(xa, 1).setEnabled(false);
+//                            studytableclass.getxybutton(xa, 3).setEnabled(false);
                             break;
                         case 2:
                         case 4:
-//                            studytableclass.getxybutton(xa, 2).setBackground(Color.gray);
-//                            studytableclass.getxybutton(xa, 4).setBackground(Color.gray);
-                            studytableclass.getxybutton(xa, 2).setEnabled(false);
-                            studytableclass.getxybutton(xa, 4).setEnabled(false);
+                            studytableclass.getxybutton(xa, 2).setBackground(Color.gray);
+                            studytableclass.getxybutton(xa, 4).setBackground(Color.gray);
+//                            studytableclass.getxybutton(xa, 2).setEnabled(false);
+//                            studytableclass.getxybutton(xa, 4).setEnabled(false);
                             break;
                         case 5:
                         case 6:
-//                            studytableclass.getxybutton(xa, 5).setBackground(Color.gray);
-//                            studytableclass.getxybutton(xa, 6).setBackground(Color.gray);
-                            studytableclass.getxybutton(xa, 5).setEnabled(false);
-                            studytableclass.getxybutton(xa, 6).setEnabled(false);
+                            studytableclass.getxybutton(xa, 5).setBackground(Color.gray);
+                            studytableclass.getxybutton(xa, 6).setBackground(Color.gray);
+//                            studytableclass.getxybutton(xa, 5).setEnabled(false);
+//                            studytableclass.getxybutton(xa, 6).setEnabled(false);
                             break;
                     }
                 }

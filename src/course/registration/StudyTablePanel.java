@@ -22,7 +22,7 @@ public class StudyTablePanel {
     private JPanel studyTablePane;
     private FileReader fr;
     //Store course ID and name | timeday(0) = array of ID ,1 = array of name, 2 = array of next id...
-    ArrayList<String[]> timeday;
+    private ArrayList<String[]> timeday;
     //private String[] mw830, tr830, fs830, mw1030, tr1030, fs1030, mw1230, tr1230, fs1230, mw1430, tr1430, fs1430, mw1630, tr1630, fs1630;
     //Store course name
     //private String[] mw830n, tr830n, fs830n, mw1030n, tr1030n, fs1030n, mw1230n, tr1230n, fs1230n, mw1430n, tr1430n, fs1430n, mw1630n, tr1630n, fs1630n;
@@ -454,7 +454,7 @@ public class StudyTablePanel {
 //                if (xy[x + 1][y + 1].getText().contains("multiple")){
 //                    xy[x + 1][y + 1].setBackground(Color.lightGray);
 //                } else {
-//                    xy[x + 1][y + 1].setBackground(Color.white);
+                    xy[x + 1][y + 1].setBackground(Color.white);
 //                }
                 //For debugging
                 //System.out.println("x" + (x+1) + "y" + (y+1) + " | real value x=" + x + " y=" + y + " | tmpstrnum = " + tmpstrnum);
