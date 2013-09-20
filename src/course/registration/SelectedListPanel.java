@@ -177,7 +177,6 @@ public class SelectedListPanel {
                 if (studytableclass.getTimedaysize(tmpint) != 1 && clickedlistModel.isEmpty()) {
                     for (int i = 0; i < studytableclass.getTimedaysize(tmpint); i++) {
                         clickedlistModel.addElement(studytableclass.getTimedaystr(tmpint, i));
-                        clickedlistModel.add(i, studytableclass.getTimedaystr(tmpint, i));
                         //ArrayList<String[]> a = studytableclass.getTimeday();
                         //clickedlistModel.addElement(a.get(tmpint)[i]);
                     }
