@@ -1,4 +1,5 @@
 CourseRegistration
 ==================
 
-CourseRegistration JAVA STIU
+CourseRegistration for STIU
+JAVA Netbeans Project
