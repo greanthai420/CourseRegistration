@@ -13,9 +13,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -24,8 +24,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 public class SelectedListPanel {
 
@@ -39,8 +37,7 @@ public class SelectedListPanel {
     private DefaultListModel clickedlistModel;
     private JList selectedlist;
     private DefaultListModel selectedlistModel;
-    private ListSelectionModel selectedlistmodel;
-    private int tmpint, tmpint2;
+    private int tmpint;
 
     public SelectedListPanel() {
         selectedListPane = new JPanel();
@@ -51,31 +48,28 @@ public class SelectedListPanel {
         JLabel greetmsg = new JLabel("Welcome! " + mainwin.getStudentInfo("insname_f"));
         selectedListPane.add(greetmsg);
 
-        //List for clicked button
-        //Items to add into list
+        /*
+         * Create list for listing overlaps from xy buttons
+         */
         clickedlistModel = new DefaultListModel();
-        //The list
         clickedlist = new JList(clickedlistModel);
-        //Make it scrollable
-        JScrollPane clickedlistScroller = new JScrollPane(clickedlist);
         clickedlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        selectedListPane.add(clickedlistScroller);
-        //Adds mouse listener
+        //Event listener
         clickedlist.addMouseListener(new clickedlist_mouselisten());
+        JScrollPane clickedlistScroller = new JScrollPane(clickedlist);        
+        selectedListPane.add(clickedlistScroller);
 
         //Label
         JLabel info = new JLabel("Current selected course");
         selectedListPane.add(info);
 
-        //List for selected course
-
+        /*
+         * Create list for chosen courses
+         */
         selectedlistModel = new DefaultListModel();
         selectedlist = new JList(selectedlistModel);
-        JScrollPane selectedlistScroller = new JScrollPane(selectedlist);
         selectedlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        selectedlistmodel = selectedlist.getSelectionModel();
-        //selectedlistmodel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+        JScrollPane selectedlistScroller = new JScrollPane(selectedlist);
         selectedListPane.add(selectedlistScroller);
 
         //Send email button
@@ -95,8 +89,6 @@ public class SelectedListPanel {
                 studytableclass.getxybutton(x, y).addActionListener(new xyButtonListener(x, y));
             }
         }
-
-        selectedlistmodel.addListSelectionListener(new selectedlistListener());
     }
 
     private class xyButtonListener implements ActionListener {
@@ -110,8 +102,11 @@ public class SelectedListPanel {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            //Remove precious JList clickedlist records
-            clickedlistModel.removeAllElements();
+            if (!clickedlistModel.isEmpty()) {
+                clickedlistModel.removeAllElements();
+            }
+            clickedlist.setEnabled(true);
+
 
             //Remove other button's background color if they are yellow
             for (int xi = 1; xi <= 5; xi++) {
@@ -122,9 +117,12 @@ public class SelectedListPanel {
                 }
             }
 
-            //Determines which button is pressed
+            /*
+             * Determines which button is pressed
+             * Only do event if the button is not cyan (not already added to selected list
+             */
             tmpint = 0;
-            if (evt.getSource() == studytableclass.getxybutton(xa, ya)) {
+            if (evt.getSource() == studytableclass.getxybutton(xa, ya) && !(studytableclass.getxybutton(xa, ya).getBackground().equals(Color.cyan))) {
                 //System.out.println("It's x" + xa + " y" + ya);
                 if (xa == 1 && (ya == 1 || ya == 3)) {
                     //timeday.get(0)                    
@@ -178,7 +176,12 @@ public class SelectedListPanel {
                  */
                 if (studytableclass.getTimedaysize(tmpint) != 1 && clickedlistModel.isEmpty()) {
                     for (int i = 0; i < studytableclass.getTimedaysize(tmpint); i++) {
-                        clickedlistModel.addElement(studytableclass.getTimedaystr(tmpint, i));
+                        //clickedlistModel.addElement(studytableclass.getTimedaystr(tmpint, i));
+                        //clickedlistModel.add(i, studytableclass.getTimedaystr(tmpint, i));
+                        
+                        //System.out.println(studytableclass.getTimeday().get(0));
+                        ArrayList<String[]> a = studytableclass.getTimeday();
+                        clickedlistModel.addElement(a.get(tmpint)[i]);
                     }
                     //Make the corresponding buttons yellow
                     switch (ya) {
@@ -204,39 +207,29 @@ public class SelectedListPanel {
                     switch (ya) {
                         case 1:
                         case 3:
-                            studytableclass.getxybutton(xa, 1).setBackground(Color.gray);
-                            studytableclass.getxybutton(xa, 3).setBackground(Color.gray);
+                            studytableclass.getxybutton(xa, 1).setBackground(Color.cyan);
+                            studytableclass.getxybutton(xa, 3).setBackground(Color.cyan);
 //                            studytableclass.getxybutton(xa, 1).setEnabled(false);
 //                            studytableclass.getxybutton(xa, 3).setEnabled(false);
                             break;
                         case 2:
                         case 4:
-                            studytableclass.getxybutton(xa, 2).setBackground(Color.gray);
-                            studytableclass.getxybutton(xa, 4).setBackground(Color.gray);
+                            studytableclass.getxybutton(xa, 2).setBackground(Color.cyan);
+                            studytableclass.getxybutton(xa, 4).setBackground(Color.cyan);
 //                            studytableclass.getxybutton(xa, 2).setEnabled(false);
 //                            studytableclass.getxybutton(xa, 4).setEnabled(false);
                             break;
                         case 5:
                         case 6:
-                            studytableclass.getxybutton(xa, 5).setBackground(Color.gray);
-                            studytableclass.getxybutton(xa, 6).setBackground(Color.gray);
+                            studytableclass.getxybutton(xa, 5).setBackground(Color.cyan);
+                            studytableclass.getxybutton(xa, 6).setBackground(Color.cyan);
 //                            studytableclass.getxybutton(xa, 5).setEnabled(false);
 //                            studytableclass.getxybutton(xa, 6).setEnabled(false);
                             break;
                     }
                 }
             }
-        }
-    }
-
-    private class selectedlistListener implements ListSelectionListener {
-
-        private int a = 0;
-
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            boolean isAdjusting = e.getValueIsAdjusting();
-
+            //clickedlist.addMouseListener(new clickedlist_mouselisten());
         }
     }
 
@@ -248,7 +241,54 @@ public class SelectedListPanel {
                 //Only adds to selectedlist if the item isn't already there
                 String tmpstr = studytableclass.getTimedaystr(tmpint, clickedlist.getSelectedIndex());
                 if (!(selectedlistModel.contains(tmpstr))) {
+
                     selectedlistModel.addElement(studytableclass.getTimedaystr(tmpint, clickedlist.getSelectedIndex()));
+                    //Prevents user from adding more from the same day/time
+                    clickedlist.setEnabled(false);                    
+
+                    //DEBUG : checks for course name in addition to course ID
+                    //System.out.println(studytableclass.getTimedaystr(tmpint+1, clickedlist.getSelectedIndex()));
+
+                    int x = 0;
+                    int[] y = new int[2];
+
+
+                    if (tmpint == 0 || tmpint == 2 || tmpint == 4) {
+                        x = 1;
+                    } else if (tmpint == 6 || tmpint == 8 || tmpint == 10) {
+                        x = 2;
+                    } else if (tmpint == 12 || tmpint == 14 || tmpint == 16) {
+                        x = 3;
+                    } else if (tmpint == 18 || tmpint == 20 || tmpint == 22) {
+                        x = 4;
+                    } else if (tmpint == 24 || tmpint == 26 || tmpint == 28) {
+                        x = 5;
+                    }
+
+                    if (tmpint == 0 || tmpint == 6 || tmpint == 12 || tmpint == 18 || tmpint == 24) {
+                        y[0] = 1;
+                        y[1] = 3;
+//                        for (int i = 1; i <= 6; i++) {
+//                            studytableclass.getxybutton(x, i).setBackground(Color.gray);
+//                        }
+                    } else if (tmpint == 2 || tmpint == 8 || tmpint == 14 || tmpint == 20 || tmpint == 26) {
+                        y[0] = 2;
+                        y[1] = 4;
+//                        for (int i = 1; i <= 6; i++) {
+//                            studytableclass.getxybutton(x, i).setBackground(Color.gray);
+//                        }
+                    } else {
+                        y[0] = 5;
+                        y[1] = 6;
+//                        for (int i = 1; i <= 6; i++) {
+//                            studytableclass.getxybutton(x, i).setBackground(Color.gray);
+//                        }
+                    }
+
+                    studytableclass.getxybutton(x, y[0]).setBackground(Color.cyan);
+                    studytableclass.getxybutton(x, y[1]).setBackground(Color.cyan);
+
+
                 }
             }
         }
