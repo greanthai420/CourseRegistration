@@ -84,6 +84,7 @@ public class SelectedListPanel {
     }
 
     private void addEventListener() {
+        //Adds event listener for every buttons
         for (int x = 1; x < 6; x++) {
             for (int y = 1; y < 7; y++) {
                 studytableclass.getxybutton(x, y).addActionListener(new xyButtonListener(x, y));
@@ -102,11 +103,11 @@ public class SelectedListPanel {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            //Initialize the list
             if (!clickedlistModel.isEmpty()) {
                 clickedlistModel.removeAllElements();
             }
             clickedlist.setEnabled(true);
-
 
             //Remove other button's background color if they are yellow
             for (int xi = 1; xi <= 5; xi++) {
@@ -123,7 +124,6 @@ public class SelectedListPanel {
              */
             tmpint = 0;
             if (evt.getSource() == studytableclass.getxybutton(xa, ya) && !(studytableclass.getxybutton(xa, ya).getBackground().equals(Color.cyan))) {
-                //System.out.println("It's x" + xa + " y" + ya);
                 if (xa == 1 && (ya == 1 || ya == 3)) {
                     //timeday.get(0)                    
                     tmpint = 0;
@@ -176,12 +176,10 @@ public class SelectedListPanel {
                  */
                 if (studytableclass.getTimedaysize(tmpint) != 1 && clickedlistModel.isEmpty()) {
                     for (int i = 0; i < studytableclass.getTimedaysize(tmpint); i++) {
-                        //clickedlistModel.addElement(studytableclass.getTimedaystr(tmpint, i));
-                        //clickedlistModel.add(i, studytableclass.getTimedaystr(tmpint, i));
-                        
-                        //System.out.println(studytableclass.getTimeday().get(0));
-                        ArrayList<String[]> a = studytableclass.getTimeday();
-                        clickedlistModel.addElement(a.get(tmpint)[i]);
+                        clickedlistModel.addElement(studytableclass.getTimedaystr(tmpint, i));
+                        clickedlistModel.add(i, studytableclass.getTimedaystr(tmpint, i));
+                        //ArrayList<String[]> a = studytableclass.getTimeday();
+                        //clickedlistModel.addElement(a.get(tmpint)[i]);
                     }
                     //Make the corresponding buttons yellow
                     switch (ya) {
@@ -229,7 +227,6 @@ public class SelectedListPanel {
                     }
                 }
             }
-            //clickedlist.addMouseListener(new clickedlist_mouselisten());
         }
     }
 
@@ -287,8 +284,6 @@ public class SelectedListPanel {
 
                     studytableclass.getxybutton(x, y[0]).setBackground(Color.cyan);
                     studytableclass.getxybutton(x, y[1]).setBackground(Color.cyan);
-
-
                 }
             }
         }
