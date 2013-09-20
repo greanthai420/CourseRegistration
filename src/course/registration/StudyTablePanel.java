@@ -34,7 +34,7 @@ public class StudyTablePanel {
         fr = file;
         studyTablePane = new JPanel();
         studyTablePane.setBorder(BorderFactory.createLineBorder(Color.black));
-        studyTablePane.setBackground(Color.white);
+        //studyTablePane.setBackground(Color.white);
         studyTablePane.setLayout(new GridBagLayout());
         GridBagConstraints sc = new GridBagConstraints();
 

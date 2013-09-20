@@ -13,6 +13,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -21,6 +24,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class SelectedListPanel {
 
@@ -34,12 +39,17 @@ public class SelectedListPanel {
     private DefaultListModel clickedlistModel;
     private JList selectedlist;
     private DefaultListModel selectedlistModel;
+    private ListSelectionModel selectedlistmodel;
+    private int tmpint, tmpint2;
 
     public SelectedListPanel() {
         selectedListPane = new JPanel();
         selectedListPane.setBorder(BorderFactory.createLineBorder(Color.black));
         selectedListPane.setBackground(Color.white);
         selectedListPane.setLayout(new GridLayout(0, 1));
+
+        JLabel greetmsg = new JLabel("Welcome! " + mainwin.getStudentInfo("insname_f"));
+        selectedListPane.add(greetmsg);
 
         //List for clicked button
         //Items to add into list
@@ -50,32 +60,43 @@ public class SelectedListPanel {
         JScrollPane clickedlistScroller = new JScrollPane(clickedlist);
         clickedlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         selectedListPane.add(clickedlistScroller);
+        //Adds mouse listener
+        clickedlist.addMouseListener(new clickedlist_mouselisten());
 
         //Label
         JLabel info = new JLabel("Current selected course");
         selectedListPane.add(info);
 
         //List for selected course
+
         selectedlistModel = new DefaultListModel();
         selectedlist = new JList(selectedlistModel);
         JScrollPane selectedlistScroller = new JScrollPane(selectedlist);
         selectedlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        selectedlistmodel = selectedlist.getSelectionModel();
+        //selectedlistmodel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         selectedListPane.add(selectedlistScroller);
 
         //Send email button
         JButton sendemail = new JButton("Send e-mail");
         selectedListPane.add(sendemail);
 
-        //Add actions for xy buttons from studytablepanel
-        addaction();
+        /*
+         * Add actions for xy buttons from studytablepanel
+         * Add actions for lists
+         */
+        addEventListener();
     }
 
-    private void addaction() {
+    private void addEventListener() {
         for (int x = 1; x < 6; x++) {
             for (int y = 1; y < 7; y++) {
                 studytableclass.getxybutton(x, y).addActionListener(new xyButtonListener(x, y));
             }
         }
+
+        selectedlistmodel.addListSelectionListener(new selectedlistListener());
     }
 
     private class xyButtonListener implements ActionListener {
@@ -102,7 +123,7 @@ public class SelectedListPanel {
             }
 
             //Determines which button is pressed
-            int tmpint = 0;
+            tmpint = 0;
             if (evt.getSource() == studytableclass.getxybutton(xa, ya)) {
                 //System.out.println("It's x" + xa + " y" + ya);
                 if (xa == 1 && (ya == 1 || ya == 3)) {
@@ -205,6 +226,47 @@ public class SelectedListPanel {
                     }
                 }
             }
+        }
+    }
+
+    private class selectedlistListener implements ListSelectionListener {
+
+        private int a = 0;
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            boolean isAdjusting = e.getValueIsAdjusting();
+
+        }
+    }
+
+    private class clickedlist_mouselisten implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent evt) {
+            if (evt.getClickCount() == 2) {
+                //Only adds to selectedlist if the item isn't already there
+                String tmpstr = studytableclass.getTimedaystr(tmpint, clickedlist.getSelectedIndex());
+                if (!(selectedlistModel.contains(tmpstr))) {
+                    selectedlistModel.addElement(studytableclass.getTimedaystr(tmpint, clickedlist.getSelectedIndex()));
+                }
+            }
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent evt) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent evt) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent evt) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent evt) {
         }
     }
 

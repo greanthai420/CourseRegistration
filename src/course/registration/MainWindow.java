@@ -527,6 +527,25 @@ public class MainWindow extends JFrame {
     }
     //private StudyTablePanel studytableclass;
 
+    public String getStudentInfo(String which){
+        String returnvalue = "";
+        
+        switch (which){
+            case "insname_f":
+                returnvalue = insname_f;
+                break;
+            case "insname_l":
+                returnvalue = insname_l;
+                break;
+            case "insID":
+                returnvalue = String.valueOf(insID);
+                break;
+            case "insMajor":
+                returnvalue = insMajor;                
+        }        
+        return returnvalue;
+    }
+    
     public StudyTablePanel getstudytableclass() {
         return studytableclass;
     }
