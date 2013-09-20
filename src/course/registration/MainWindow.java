@@ -365,7 +365,7 @@ public class MainWindow extends JFrame {
          */
         for (int x = 1; x < 6; x++) {
             for (int y = 1; y < 7; y++) {
-                studytableclass.getxy(x, y).addActionListener(new xyButtonListener(x, y));
+                studytableclass.getxybutton(x, y).addActionListener(new xyButtonListener(x, y));
             }
         }
 
@@ -408,13 +408,70 @@ public class MainWindow extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            //Remove precious JList clickedlist records
+            clickedlistModel.removeAllElements();
+            //Make the clicked button yellow
+            studytableclass.getxybutton(xa, ya).setBackground(Color.yellow);
             //Determines which button is pressed
-            if (evt.getSource() == studytableclass.getxy(xa, ya)) {
-                System.out.println("It's x" + xa + " y" + ya);                
+            int tmpint = 0;
+            if (evt.getSource() == studytableclass.getxybutton(xa, ya)) {
+                //System.out.println("It's x" + xa + " y" + ya);
+                if (xa == 1 && (ya == 1 || ya == 3)) {
+                    //timeday.get(0)
+                    tmpint = 0;
+                } else if (xa == 1 && (ya == 2 || ya == 4)) {
+                    //timeday.get(2)
+                    tmpint = 2;
+                } else if (xa == 1 && (ya == 5 || ya == 6)) {
+                    //timeday.get(4)
+                    tmpint = 4;
+                } else if (xa == 2 && (ya == 1 || ya == 3)) {
+                    //timeday.get(6)
+                    tmpint = 6;
+                } else if (xa == 2 && (ya == 2 || ya == 4)) {
+                    //timeday.get(8)
+                    tmpint = 8;
+                } else if (xa == 2 && (ya == 5 || ya == 6)) {
+                    //timeday.get(10)
+                    tmpint = 10;
+                } else if (xa == 3 && (ya == 1 || ya == 3)) {
+                    //timeday.get(12)
+                    tmpint = 12;
+                } else if (xa == 3 && (ya == 2 || ya == 4)) {
+                    //timeday.get(14)
+                    tmpint = 14;
+                } else if (xa == 3 && (ya == 5 || ya == 6)) {
+                    //timeday.get(16)
+                    tmpint = 16;
+                } else if (xa == 4 && (ya == 1 || ya == 3)) {
+                    //timeday.get(18)
+                    tmpint = 18;
+                } else if (xa == 4 && (ya == 2 || ya == 4)) {
+                    //timeday.get(20)
+                    tmpint = 20;
+                } else if (xa == 4 && (ya == 5 || ya == 6)) {
+                    //timeday.get(22)
+                    tmpint = 22;
+                } else if (xa == 5 && (ya == 1 || ya == 3)) {
+                    //timeday.get(24)
+                    tmpint = 24;
+                } else if (xa == 5 && (ya == 2 || ya == 4)) {
+                    //timeday.get(26)
+                    tmpint = 26;
+                } else if (xa == 5 && (ya == 5 || ya == 6)) {
+                    //timeday.get(28)
+                    tmpint = 28;
+                }
+
+                //Shows the complete list of overlapping courses in JList clickedlist
+                if (studytableclass.getTimedaysize(tmpint) != 1 && clickedlistModel.isEmpty()) {
+                    for (int i = 0; i < studytableclass.getTimedaysize(tmpint); i++) {
+                        clickedlistModel.addElement(studytableclass.getTimedaystr(tmpint, i));
+                    }
+                }
             }
         }
     }
-
 //    private void xyclicked(ActionEvent evt) {
 //        System.out.println("You pressed a button");
 //        //Adds all items to clickedlistModel only if it is empty and there are overlaps

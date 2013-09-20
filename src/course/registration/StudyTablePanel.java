@@ -425,7 +425,8 @@ public class StudyTablePanel {
                 tmpstr[tmpstrnum] = timeday.get(i)[0];
                 //System.out.println("Single data detected at i:" + i + " | tmpstrnum:" + tmpstrnum + " and tmpstr" + tmpstrnum + " is " + tmpstr[tmpstrnum]);
             } else {
-                tmpstr[tmpstrnum] = "MULTI";
+                tmpstr[tmpstrnum] = "multiple " + "(" + timeday.get(i).length + ")";
+                //System.out.println(timeday.get(i).length);
             }
         }
 
@@ -449,6 +450,7 @@ public class StudyTablePanel {
                  * and so on...
                  */
                 xy[x + 1][y + 1] = new JButton(tmpstr[tmpstrnum]);
+                xy[x + 1][y + 1].setBackground(Color.white);
                 //For debugging
                 //System.out.println("x" + (x+1) + "y" + (y+1) + " | real value x=" + x + " y=" + y + " | tmpstrnum = " + tmpstrnum);
                 c.gridx = x + 1;
@@ -468,24 +470,25 @@ public class StudyTablePanel {
     public ArrayList getTimeday() {
         return timeday;
     }
-    
+
     /*
      * Get timeday as string
      * timeday.get(td)[course]
      * td 0 = mw830id, 1 = mw830name, 2 = tr830id, 3 = tr830name...
      * course = course that belongs to that timeday combo
      */
-    public String getTimedaystr(int td, int course){
+    public String getTimedaystr(int td, int course) {
         return timeday.get(td)[course];
     }
-    
-    public int getTimedaysize(int td){
+
+    public int getTimedaysize(int td) {
         return timeday.get(td).length;
     }
 
-    public JButton getxy(int x, int y) {
+    public JButton getxybutton(int x, int y) {
         return xy[x][y];
     }
+
     public JPanel getpanel() {
         return studyTablePane;
     }
@@ -502,6 +505,5 @@ public class StudyTablePanel {
         c.weighty = 1.00;
         return c;
     }
-    
     //EOF
 }
