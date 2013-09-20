@@ -34,6 +34,7 @@ public class MainWindow extends JFrame {
     private JPanel selectedListPane;
     //Study table panel
     private StudyTablePanel studytableclass;
+    private SelectedListPanel selectedclass;
     //private JPanel studyTablePane;
     private JPanel headerLogoPane;
     private JPanel mainPane;
@@ -48,7 +49,9 @@ public class MainWindow extends JFrame {
     private String insMajor;
     //File reader
     private FileReader filereader;
+    //Lists in selectedpanel
     private DefaultListModel clickedlistModel;
+    private DefaultListModel selectedlistModel;
 
     //Constructor without fixed read from file
     public MainWindow() {
@@ -320,11 +323,13 @@ public class MainWindow extends JFrame {
                 headerLogoPane.setVisible(false);
                 contentpane.remove(mainPane);
                 contentpane.remove(headerLogoPane);
-                //Call studytablepane and selectecpane
+                //Call studytablepane and selectedpane
                 //studytablepanel();
                 studytableclass = new StudyTablePanel(filereader);
                 contentpane.add(studytableclass.getpanel(), studytableclass.returnc());
-                selectedpanel();
+                //selectedpanel();
+                selectedclass = new SelectedListPanel();
+                contentpane.add(selectedclass.getpanel(), selectedclass.returnc());
             } else {
                 JOptionPane.showMessageDialog(null, "Student ID must be numbers!", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
@@ -382,8 +387,10 @@ public class MainWindow extends JFrame {
         //Label
         JLabel info = new JLabel("Current selected course");
         selectedListPane.add(info);
+
         //List for selected course
-        JList selectedlist = new JList();
+        selectedlistModel = new DefaultListModel();
+        JList selectedlist = new JList(selectedlistModel);
         JScrollPane selectedlistScroller = new JScrollPane(selectedlist);
         selectedlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         selectedListPane.add(selectedlistScroller);
@@ -411,13 +418,13 @@ public class MainWindow extends JFrame {
             //Remove precious JList clickedlist records
             clickedlistModel.removeAllElements();
             //Make the clicked button yellow
-            studytableclass.getxybutton(xa, ya).setBackground(Color.yellow);
+            //studytableclass.getxybutton(xa, ya).setBackground(Color.yellow);
             //Determines which button is pressed
             int tmpint = 0;
             if (evt.getSource() == studytableclass.getxybutton(xa, ya)) {
                 //System.out.println("It's x" + xa + " y" + ya);
                 if (xa == 1 && (ya == 1 || ya == 3)) {
-                    //timeday.get(0)
+                    //timeday.get(0)                    
                     tmpint = 0;
                 } else if (xa == 1 && (ya == 2 || ya == 4)) {
                     //timeday.get(2)
@@ -463,23 +470,65 @@ public class MainWindow extends JFrame {
                     tmpint = 28;
                 }
 
-                //Shows the complete list of overlapping courses in JList clickedlist
+                /*
+                 * Shows the complete list of overlapping courses in JList clickedlist
+                 */
                 if (studytableclass.getTimedaysize(tmpint) != 1 && clickedlistModel.isEmpty()) {
                     for (int i = 0; i < studytableclass.getTimedaysize(tmpint); i++) {
                         clickedlistModel.addElement(studytableclass.getTimedaystr(tmpint, i));
+                    }
+                    //Make the corresponding buttons yellow
+                    switch (ya) {
+                        case 1:
+                        case 3:
+                            studytableclass.getxybutton(xa, 1).setBackground(Color.yellow);
+                            studytableclass.getxybutton(xa, 3).setBackground(Color.yellow);
+                            break;
+                        case 2:
+                        case 4:
+                            studytableclass.getxybutton(xa, 2).setBackground(Color.yellow);
+                            studytableclass.getxybutton(xa, 4).setBackground(Color.yellow);
+                            break;
+                        case 5:
+                        case 6:
+                            studytableclass.getxybutton(xa, 5).setBackground(Color.yellow);
+                            studytableclass.getxybutton(xa, 6).setBackground(Color.yellow);
+                            break;
+                    }
+                    //Adds directly to selectedlist if there is only one course without overlaps
+                } else if (studytableclass.getTimedaysize(tmpint) == 1 && !(selectedlistModel.contains(studytableclass.getTimedaystr(tmpint, 0)))) {
+                    selectedlistModel.addElement(studytableclass.getTimedaystr(tmpint, 0));
+                    switch (ya) {
+                        case 1:
+                        case 3:
+//                            studytableclass.getxybutton(xa, 1).setBackground(Color.gray);
+//                            studytableclass.getxybutton(xa, 3).setBackground(Color.gray);
+                            studytableclass.getxybutton(xa, 1).setEnabled(false);
+                            studytableclass.getxybutton(xa, 3).setEnabled(false);
+                            break;
+                        case 2:
+                        case 4:
+//                            studytableclass.getxybutton(xa, 2).setBackground(Color.gray);
+//                            studytableclass.getxybutton(xa, 4).setBackground(Color.gray);
+                            studytableclass.getxybutton(xa, 2).setEnabled(false);
+                            studytableclass.getxybutton(xa, 4).setEnabled(false);
+                            break;
+                        case 5:
+                        case 6:
+//                            studytableclass.getxybutton(xa, 5).setBackground(Color.gray);
+//                            studytableclass.getxybutton(xa, 6).setBackground(Color.gray);
+                            studytableclass.getxybutton(xa, 5).setEnabled(false);
+                            studytableclass.getxybutton(xa, 6).setEnabled(false);
+                            break;
                     }
                 }
             }
         }
     }
-//    private void xyclicked(ActionEvent evt) {
-//        System.out.println("You pressed a button");
-//        //Adds all items to clickedlistModel only if it is empty and there are overlaps
-//        if (studytableclass.getTimedaysize(0) != 1 && clickedlistModel.isEmpty()) {
-//            for (int i = 0; i < studytableclass.getTimedaysize(0); i++) {
-//                clickedlistModel.addElement(studytableclass.getTimedaystr(0, i));
-//            }
-//        }
-//    }
+    //private StudyTablePanel studytableclass;
+
+    public StudyTablePanel getstudytableclass() {
+        return studytableclass;
+    }
     //EOF
 }

@@ -449,8 +449,13 @@ public class StudyTablePanel {
                  * x3y6 tmpstr[5]
                  * and so on...
                  */
-                xy[x + 1][y + 1] = new JButton(tmpstr[tmpstrnum]);
-                xy[x + 1][y + 1].setBackground(Color.white);
+                xy[x + 1][y + 1] = new JButton(tmpstr[tmpstrnum]);                
+                //Make buttons with multiple overlaps light gray, otherwise white
+//                if (xy[x + 1][y + 1].getText().contains("multiple")){
+//                    xy[x + 1][y + 1].setBackground(Color.lightGray);
+//                } else {
+//                    xy[x + 1][y + 1].setBackground(Color.white);
+//                }
                 //For debugging
                 //System.out.println("x" + (x+1) + "y" + (y+1) + " | real value x=" + x + " y=" + y + " | tmpstrnum = " + tmpstrnum);
                 c.gridx = x + 1;

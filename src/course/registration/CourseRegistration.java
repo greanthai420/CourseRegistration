@@ -11,13 +11,16 @@ import java.io.IOException;
 
 public class CourseRegistration {
 
-    /**
-     * @param args the command line arguments
-     */
+    static MainWindow mainwin;
+
     public static void main(String[] args) throws IOException {
-        MainWindow mainwin = new MainWindow("Schedule.csv");
+        mainwin = new MainWindow("Schedule.csv");
         //FileReader filereader = new FileReader();
         //filereader.getCourseName(2);
+    }
+    
+    public MainWindow getMainWindow(){
+        return mainwin;
     }
     
     //EOF
