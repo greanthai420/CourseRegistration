@@ -1,7 +1,6 @@
 /*
  * AUTHOR
- * SUTHIPONG THONGJAROEN 212210025
- * Tanakrit Pilaphaeng 212310097
+ * Seahawks
  * 
  * Class to create main window GUI and a bunch of things.
  */

@@ -1,9 +1,8 @@
 /*
  * AUTHOR
- * SUTHIPONG THONGJAROEN 212210025
- * Tanakrit Pilaphaeng 212310097
+ * Seahawks
  * 
- * Selected listpanel in main window.
+ * Selected list panel in main window.
  * Migrated to a new class/file because of long code.
  */
 package course.registration;
@@ -15,8 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.swing.BorderFactory;

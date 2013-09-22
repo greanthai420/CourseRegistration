@@ -1,8 +1,4 @@
 /*
- * AUTHOR
- * SUTHIPONG THONGJAROEN 212210025
- * Tanakrit Pilaphaeng 212310097
- * 
  * Function to read from file and store data for further use.
  */
 package course.registration;

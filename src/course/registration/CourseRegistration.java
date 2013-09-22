@@ -1,7 +1,6 @@
 /*
  * AUTHOR
- * SUTHIPONG THONGJAROEN 212210025
- * Tanakrit Pilaphaeng 212310097
+ * Seahawks
  * 
  * Program to help students manage their course registration.
  */
@@ -15,8 +14,6 @@ public class CourseRegistration {
 
     public static void main(String[] args) throws IOException {
         mainwin = new MainWindow("Schedule.csv");
-        //FileReader filereader = new FileReader();
-        //filereader.getCourseName(2);
     }
     
     public MainWindow getMainWindow(){

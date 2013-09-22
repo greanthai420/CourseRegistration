@@ -1,7 +1,11 @@
+/*
+ * Function to send email.
+ */
 package course.registration;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+import javax.swing.JOptionPane;
 
 public class EmailSenderMessage {
 
@@ -29,5 +33,6 @@ public class EmailSenderMessage {
         //String[] attachment = {"c:/classes/fourfriends.txt"};
         EmailSender sender = new EmailSender();
         sender.sendEmail(host, port, mailFrom, password, mailTo, subject, bodyMessage, null);
+        JOptionPane.showMessageDialog(null, "E-mail sent!");
     }
 }

@@ -1,7 +1,6 @@
 /*
  * AUTHOR
- * SUTHIPONG THONGJAROEN 212210025
- * Tanakrit Pilaphaeng 212310097
+ * Seahawks
  * 
  * Study table panel in main window.
  * Migrated to a new class/file because of long code.
