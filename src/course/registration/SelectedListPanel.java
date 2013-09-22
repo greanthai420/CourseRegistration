@@ -314,7 +314,6 @@ public class SelectedListPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
 
-            //selectedlistModel.getElementAt(0);
             if (!(selectedlistModel.isEmpty())) {
                 String allitems = "";
                 for (int i = 0; i < selectedlistModel.getSize(); i++) {
