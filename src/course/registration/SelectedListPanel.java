@@ -15,12 +15,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -56,7 +60,7 @@ public class SelectedListPanel {
         clickedlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //Event listener
         clickedlist.addMouseListener(new clickedlist_mouselisten());
-        JScrollPane clickedlistScroller = new JScrollPane(clickedlist);        
+        JScrollPane clickedlistScroller = new JScrollPane(clickedlist);
         selectedListPane.add(clickedlistScroller);
 
         //Label
@@ -75,6 +79,7 @@ public class SelectedListPanel {
         //Send email button
         JButton sendemail = new JButton("Send e-mail");
         selectedListPane.add(sendemail);
+        sendemail.addActionListener(new emailButtonListener());
 
         /*
          * Add actions for xy buttons from studytablepanel
@@ -240,7 +245,7 @@ public class SelectedListPanel {
 
                     selectedlistModel.addElement(studytableclass.getTimedaystr(tmpint, clickedlist.getSelectedIndex()));
                     //Prevents user from adding more from the same day/time
-                    clickedlist.setEnabled(false);                    
+                    clickedlist.setEnabled(false);
 
                     //DEBUG : checks for course name in addition to course ID
                     //System.out.println(studytableclass.getTimedaystr(tmpint+1, clickedlist.getSelectedIndex()));
@@ -301,6 +306,35 @@ public class SelectedListPanel {
 
         @Override
         public void mouseExited(MouseEvent evt) {
+        }
+    }
+
+    private class emailButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+            //selectedlistModel.getElementAt(0);
+            if (!(selectedlistModel.isEmpty())) {
+                String allitems = "";
+                for (int i = 0; i < selectedlistModel.getSize(); i++) {
+                    if (i > 0) {
+                        allitems += ", ";
+                    }
+                    allitems += selectedlistModel.getElementAt(i).toString();
+                }
+
+                String email = JOptionPane.showInputDialog("Please input yout E-mail address");
+                String password = JOptionPane.showInputDialog("Please input yout E-mail password");
+
+                try {
+                    EmailSenderMessage sendmail = new EmailSenderMessage(email, password, allitems);
+                } catch (AddressException ex) {
+                    //Logger.getLogger(SelectedListPanel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MessagingException ex) {
+                    //Logger.getLogger(SelectedListPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 
